@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class="mb-4 text-center">Create a New Blog</h3>
+
+<form  method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="title" class="form-label">Blog Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    <div class="mb-3">
+        <label for="author" class="form-label">Blog Author</label>
+        <select id="author" class="form-select" aria-label="author" name="author" required>
+            <option value="Katarina Yu">Katarina Yu</option>
+            <option value="WINTER">WINTER</option>
+            <option value="Yoo Jimin">Yoo Jimin</option>
+            <option value="Velvet Crowe">Velvet Crowe</option>
+            <option value="Bae Joohyun">Bae Joohyun</option>
+          </select>
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Blog Category</label>
+        <select id="category" class="form-select" aria-label="category" name="category" required>
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="K-pop">K-pop</option>
+            <option value="Sports">Sports</option>
+            <option value="Politics">Politics</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label">Blog Contents</label>
+        <textarea class="form-control resize-none" id="content" rows="3" name="content" required></textarea>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+
+
+
+</form>
+{% endblock %}

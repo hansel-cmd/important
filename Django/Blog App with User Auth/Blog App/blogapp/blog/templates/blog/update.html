@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3 class="mb-4 text-center">Update Blog</h3>
+
+<form  method="POST">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input type="hidden" class="form-control" id="id" name="id" required value="{{ blog.id }}">
+        <label for="title" class="form-label">Blog Title</label>
+        <input type="text" class="form-control" id="title" name="title" required value="{{ blog.title }}">
+    </div>
+    <div class="mb-3">
+        <label for="category" class="form-label">Blog Category</label>
+        <select id="category" class="form-select" aria-label="category" name="category" required value="{{ blog.category }}">
+            <option value="Lifestyle">Lifestyle</option>
+            <option value="K-pop">K-pop</option>
+            <option value="Sports">Sports</option>
+            <option value="Politics">Politics</option>
+            <option value="Entertainment">Entertainment</option>
+          </select>
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label">Blog Contents</label>
+        <textarea class="form-control resize-none" id="content" rows="3" name="content" required>{{ blog.content }}
+        </textarea>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary" type="submit">Update</button>
+        <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-danger text-white me-2">Cancel</a>
+    </div>
+
+
+
+</form>
+{% endblock %}

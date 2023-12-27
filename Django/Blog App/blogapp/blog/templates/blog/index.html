@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog Application
+{% endblock %}
+
+
+{% block content %}
+
+<h3 class="mb-4 text-center">All Blogs</h3>
+
+{% include 'blog/blog.html' %}
+
+{% include 'blog/pagination.html' %}
+
+{% endblock %}

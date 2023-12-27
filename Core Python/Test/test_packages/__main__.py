@@ -1,0 +1,1 @@
+print("Executing test_packages/__main__.py when the command python test_packages is run")

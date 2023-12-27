@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog Application | Login
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="d-flex justify-content-center">
+        <div class="border p-4" style="width: 60%;">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                {% if errors.username %}
+                    <input type="text" class="form-control border border-danger" id="username" name="username" aria-describedby="usernameHelp" value="{{ values.username }}" required>
+                    <div class="form-text"><span style="font-size: 12px;">{{ errors.username.error_msg }}</span></div>
+                {% else %}
+                    <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" value="{{ values.username }}" required>
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="username" class="form-label">Password</label>
+                {% if errors.password %}
+                    <div class="input-group">
+                        <input type="password" class="form-control border border-danger" id="password"name="password" value="{{ values.password }}" required>
+                        <span class="input-group-text" style="cursor: pointer;" id="password-button"><i class="bi bi-eye-slash-fill"></i></span>
+                    </div>
+                    <div class="form-text"><span style="font-size: 12px;">{{ errors.password.error_msg }}</span></div>
+                {% else %}
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" id="password"name="password" value="{{ values.password }}" required>
+                        <span class="input-group-text" style="cursor: pointer;" id="password-button"><i class="bi bi-eye-slash-fill"></i></span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <div class="form-text">Don't have an account? <a href="{% url 'signup' %}">Sign up!</a></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    const password = document.querySelector('#password')
+    const confirm_password = document.querySelector('#confirm_password')
+    const password_button = document.querySelector('#password-button')
+    const confirm_password_button = document.querySelector('#confirm-password-button')
+
+    password_button.addEventListener('click', (e) => {
+        if (password_button.querySelector('i').classList.contains('bi-eye-slash-fill')) {
+            password_button.querySelector('i').classList.remove('bi-eye-slash-fill')
+            password_button.querySelector('i').classList.add('bi-eye-fill')
+            password.type = 'text'
+        } else {
+            password_button.querySelector('i').classList.remove('bi-eye-fill')
+            password_button.querySelector('i').classList.add('bi-eye-slash-fill')
+            password.type = 'password'
+        }
+    })
+
+    confirm_password_button.addEventListener('click', (e) => {
+        if (confirm_password_button.querySelector('i').classList.contains('bi-eye-slash-fill')) {
+            confirm_password_button.querySelector('i').classList.remove('bi-eye-slash-fill')
+            confirm_password_button.querySelector('i').classList.add('bi-eye-fill')
+            confirm_password.type = 'text'
+        } else {
+            confirm_password_button.querySelector('i').classList.remove('bi-eye-fill')
+            confirm_password_button.querySelector('i').classList.add('bi-eye-slash-fill')
+            confirm_password.type = 'password'
+        }
+    })
+
+</script>
+
+{% endblock %}

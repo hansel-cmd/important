@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block title %}
+To Do List
+{% endblock %}
+
+{% block content %}
+
+{% include 'todos/new.html' %}
+
+{% include 'todos/tabs.html' %}
+
+<ul class="list-group">
+    {% if todos.count == 0 %}
+    <div class="d-flex justify-content-center">
+        <p class="fst-italic">No To Dos available...</p>
+    </div>
+    {% endif %}
+
+    {% for todo in todos %}
+    <li class="list-group-item">
+        <div class="form-check d-flex align-items-center justify-content-between">
+            <div>
+                <input class="form-check-input" type="checkbox" id="{{ todo.id }}" {% if todo.is_completed %}checked{%endif %}>
+                <label class="form-check-label" for="{{ todo.id }}">
+                    <span class="{% if todo.is_completed %} line-through {% endif %}" data-value="{{ todo.id }}">
+                        {{ todo.title }}
+                    </span>
+                </label>
+            </div>
+            <button class="btn btn-outline-danger p-auto" type="button" data-bs-toggle="modal" data-bs-target="#ToDoItem{{ todo.id }}">
+                <i class="bi bi-trash3-fill"></i>
+            </button>
+        </div>
+    </li>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ToDoItem{{todo.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure?</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              You are about to delete <span class="fst-italic">"{{ todo.title }}"</span> to dos. Do you want to continue?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, I changed my mind</button>
+              <button type="button" class="btn btn-danger" data-value="{{ todo.id }}" data-name="delete">Yes, Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</ul>
+
+
+
+
+<script>
+
+    const checkboxes = document.querySelectorAll('.form-check-input')
+    checkboxes.forEach(box => {
+        box.addEventListener('change', (e) => {
+            const span = document.querySelector(`span[data-value="${e.target.id}"]`)
+            const data = {
+                id: e.target.id,
+                is_completed: e.target.checked,
+                title: span.innerText,
+            }
+
+            fetch("{% url 'update_completed' %}", {
+                headers: {
+                    'X-CSRFtoken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                method: "POST",
+                body: new URLSearchParams(data)
+            }).then(res => {
+                location.assign("{{ request.path }}")
+            })
+            .catch(err => console.log(err))
+        })
+    })
+
+    const deleteButtons = document.querySelectorAll('button[data-name="delete"]')
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            value = button.getAttribute('data-value')
+            const data = {
+                id: value
+            }
+
+            fetch("{% url 'delete' %}", {
+                headers: {
+                    'X-CSRFtoken': '{{ csrf_token }}',
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                method: "DELETE",
+                body: new URLSearchParams(data)
+            }).then(res => {
+                location.assign("{% url 'index' %}")
+            })
+            .catch(err => console.log(err))
+            
+        })
+    })
+
+</script>
+
+{% endblock %}

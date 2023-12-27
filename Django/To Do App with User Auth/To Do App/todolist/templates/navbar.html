@@ -1,0 +1,18 @@
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top">
+    <div class="mx-auto d-flex justify-content-between custom-width container"> 
+      <a class="navbar-brand" href="{% url 'index' %}">To Do Application</a>
+      {% if not request.user.is_anonymous %}
+        <div>
+          <span class="text-white">Hello, {{ request.user.first_name }} {{ request.user.last_name }}!</span>
+          <span class="text-white"> | </span>
+          <a class="text-decoration-none text-white" href="{% url 'logout' %}">Log out</a>
+        </div>
+      {% else %}
+        <div>
+          <a class="text-decoration-none text-white" href="{% url 'login' %}">Log in</a>
+          <span class="text-white"> | </span>
+          <a class="text-decoration-none text-white" href="{% url 'signup' %}">Sign up</a>
+        </div>
+      {% endif %}
+    </div>
+  </nav>

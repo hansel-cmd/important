@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<h2>Place Your Order</h2>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% if formset.non_form_errors %}
+        <div>{{ formset.non_form_errors }}</div>
+    {% endif %}
+
+    {{ formset.management_form }}
+    <div id="form-set">
+        {% for form in formset.forms %}
+            <table class="no_eor">
+                {{ form.as_table }}
+            </table>
+        {% endfor %}
+    </div>
+    <input type="submit" value="Submit" class="button" />
+</form>
+
+
+{% endblock %}

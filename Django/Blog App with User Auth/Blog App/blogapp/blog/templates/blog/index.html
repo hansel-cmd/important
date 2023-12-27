@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Blog Application
+{% endblock %}
+
+
+{% block content %}
+
+<h3 class="mb-4 text-center">All Blogs</h3>
+
+
+{% if blogs|length == 0 %}
+<p class="fst-italic text-center">No Blogs as of the moment...</p>
+{% else %}
+{% include 'blog/blog.html' %}
+{% include 'blog/pagination.html' %}
+{% endif %}
+
+
+{% endblock %}

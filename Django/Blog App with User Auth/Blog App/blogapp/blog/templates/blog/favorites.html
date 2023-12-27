@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load tags %}
+
+{% block content %}
+
+<h3 class="mb-4 text-center">Favorite Blogs</h3>
+
+{% if blogs|length == 0 %}
+<p class="fst-italic text-center">No Favorite Blogs as of the moment...</p>
+{% endif %}
+
+{% for blog in blogs %}
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="{% url 'blog-details' blog.id %}" class="text-decoration-none text-dark">
+                {{ blog.title|format_title }}
+            </a>
+        </h5>
+        <div class="mb-2">
+            <span class="fst-italic fs-6 text-muted">{{ blog.author }} | </span>
+            <span class="fst-italic fs-6 text-muted">
+                {{ blog.created_at|date:"M d, Y" }} at {{blog.created_at|time:"H:i"}}
+            </span>
+        </div>
+        <div class="mb-2">
+            <span class="badge rounded-pill {{ blog.category|get_color }}">{{ blog.category }}</span>
+        </div>
+
+        <p class="card-text">{{ blog.content|format_content}}</p>
+    </div>
+    <div class="card-footer d-flex justify-content-between">
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'update' blog.id %}" class="btn btn-info text-white me-2">Update Blog</a>
+            
+            <form action="{% url 'delete' blog.id %}" method="DELETE">
+                {% csrf_token %}
+                <button class="btn btn-danger">Delete Blog</button>
+            </form>
+        </div>
+        <form action="{% url 'add_favorites' blog.id %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger">Remove from Favorites</button>
+        </form>
+    </div>
+</div>
+
+{% endfor %}
+
+{% if blogs|length != 0 %}
+{% include 'blog/pagination.html' %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+README.md
+setup.py
+src/awesomemodule.egg-info/PKG-INFO
+src/awesomemodule.egg-info/SOURCES.txt
+src/awesomemodule.egg-info/dependency_links.txt
+src/awesomemodule.egg-info/top_level.txt
+src/package_name/__init__.py
+src/package_name/more_source.py
+src/package_name/source.py
+src/package_name/subpackage_name/__init__.py
+src/package_name/subpackage_name/sub_source.py

@@ -1,0 +1,21 @@
+{% load tags %}
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link {% if page == 1 %} pagination-disabled {% else %} text-white bg-dark {% endif %}" href="{{current_path}}?page={{page|get_previous_page}}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for i in range %}
+        <li class="page-item">
+            <a class="page-link text-dark {% if page == i %} active-link {% endif %}" href="{{current_path}}?page={{i}}">{{ i }}</a>
+        </li>
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link {% if page == range|length %} pagination-disabled {% else %} text-white bg-dark {% endif %}" href="{{current_path}}?page={{page|get_next_page:range}}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>

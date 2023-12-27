@@ -1,0 +1,31 @@
+.resize-none {
+    resize: none !important;
+}
+
+.active-link {
+    background-color: #e9ecef;
+}
+
+.pagination-disabled {
+    color: white;
+    pointer-events: none;
+    background-color: #A0A0A0 !important;
+}
+
+.haha {
+    color: orange !important;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+.custom-width {
+    width: 50%;
+}
+
+@media screen and (max-width: 769px) {
+    .custom-width {
+        width: 100%;
+    }
+}
